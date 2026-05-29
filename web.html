@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chaudhary Jan Seva Kendra - Digital Services</title>
+  <style>
+    /* ── Base Reset & Theme ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #0072ff;
+      --secondary: #00c6ff;
+      --dark: #0f172a;
+      --card-bg: #ffffff;
+      --text-main: #334155;
+      --text-muted: #64748b;
+      --bg-light: #f8fafc;
+      --border: #e2e8f0;
+      --success: #22c55e;
+    }
+    html { scroll-behavior: smooth; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body { background-color: var(--bg-light); color: var(--text-main); line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── Navbar ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 1000;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 2rem; background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px); border-bottom: 1px solid var(--border);
+      box-shadow: 0 1px 10px rgba(0,0,0,0.05);
+    }
+    .logo { font-size: 1.3rem; font-weight: 800; color: var(--primary); letter-spacing: 0.5px; }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links a { font-weight: 500; color: var(--text-main); transition: color 0.3s; }
+    .nav-links a:hover { color: var(--primary); }
+    .cta-btn { background: var(--primary); color: #fff; padding: 0.5rem 1.2rem; border-radius: 6px; font-weight: 600; transition: background 0.3s; }
+    .cta-btn:hover { background: #0056b3; }
+
+    /* ── Notification Ticker ── */
+    .ticker-wrap {
+      margin-top: 4.5rem; background: var(--dark); color: #fff;
+      padding: 0.5rem 1rem; overflow: hidden; font-size: 0.9rem;
+    }
+    .ticker { display: inline-block; white-space: nowrap; animation: marquee 25s linear infinite; }
+    @keyframes marquee {
+      0% { transform: translate3d(100%, 0, 0); }
+      100% { transform: translate3d(-100%, 0, 0); }
+    }
+
+    /* ── Hero Section ── */
+    .hero {
+      padding: 4rem 1.5rem; text-align: center;
+      background: linear-gradient(135deg, rgba(0,114,255,0.05) 0%, rgba(0,198,255,0.05) 100%);
+      border-bottom: 1px solid var(--border);
+    }
+    .hero h1 { font-size: 2.5rem; color: var(--dark); margin-bottom: 1rem; font-weight: 800; }
+    .hero p { max-width: 600px; margin: 0 auto 1.5rem; color: var(--text-muted); font-size: 1.1rem; }
+
+    /* ── Service Filter Tabs ── */
+    .filter-container { display: flex; justify-content: center; gap: 0.5rem; margin: 2rem auto; flex-wrap: wrap; max-width: 800px; }
+    .filter-btn {
+      background: #fff; border: 1px solid var(--border); padding: 0.5rem 1.2rem;
+      border-radius: 30px; cursor: pointer; font-weight: 600; color: var(--text-main);
+      transition: all 0.3s;
+    }
+    .filter-btn.active, .filter-btn:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+    /* ── Services Grid ── */
+    .services-section { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .card {
+      background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px;
+      padding: 1.5rem; transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+    .icon { font-size: 2rem; margin-bottom: 1rem; }
+    .card h3 { font-size: 1.2rem; color: var(--dark); margin-bottom: 0.5rem; }
+    .card p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; flex-grow: 1; }
+    .fill-btn {
+      background: linear-gradient(135deg, var(--primary), var(--secondary)); color: #fff;
+      text-align: center; padding: 0.6rem; border-radius: 6px; font-weight: 600; border: none; cursor: pointer;
+    }
+
+    /* ── Form Section ── */
+    .form-section { background: var(--dark); color: #fff; padding: 4rem 1.5rem; }
+    .form-container { max-width: 600px; margin: 0 auto; background: #1e293b; padding: 2.5rem; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+    .form-container h2 { text-align: center; margin-bottom: 0.5rem; font-weight: 700; }
+    .form-container p { text-align: center; color: #94a3b8; font-size: 0.9rem; margin-bottom: 2rem; }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label { display: block; margin-bottom: 0.4rem; font-size: 0.85rem; color: #cbd5e1; font-weight: 600; }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; padding: 0.75rem; background: #0f172a; border: 1px solid #334155;
+      border-radius: 8px; color: #fff; font-size: 0.95rem; outline: none; font-family: inherit;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--secondary); }
+    .submit-btn {
+      width: 100%; background: var(--success); color: #fff; padding: 0.85rem;
+      border-radius: 8px; font-weight: 700; font-size: 1rem; border: none; cursor: pointer; transition: background 0.3s;
+    }
+    .submit-btn:hover { background: #16a34a; }
+    .wa-notice { text-align: center; margin-top: 1.5rem; font-size: 0.85rem; color: #cbd5e1; }
+    .wa-link { color: #22c55e; font-weight: 700; text-decoration: underline; }
+
+    /* ── Footer ── */
+    footer { background: #090d16; color: #64748b; padding: 2rem 1.5rem; text-align: center; border-top: 1px solid #1e293b; font-size: 0.9rem; }
+    footer span { color: #fff; font-weight: 600; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      nav .nav-links { display: none; }
+      .hero h1 { font-size: 1.8rem; }
+      .form-container { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="logo">Chaudhary Jan Seva Kendra</div>
+    <ul class="nav-links">
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#services">Our Services</a></li>
+      <li><a href="#apply">Apply Online</a></li>
+    </ul>
+    <a href="#apply" class="cta-btn">Fill Form Now</a>
+  </nav>
+
+  <!-- NOTIFICATION TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker">
+      🔥 लेटेस्ट अपडेट: नए सरकारी फॉर्म, स्कॉलरशिप, राशन कार्ड संशोधन और NIELIT CCC परीक्षा के ऑनलाइन आवेदन शुरू हैं। किसी भी सहायता के लिए नीचे दिए गए फॉर्म को भरें।
+    </div>
+  </div>
+
+  <!-- HERO SECTION -->
+  <section class="hero" id="hero">
+    <h1>सभी डिजिटल और सरकारी सेवाएं, अब ऑनलाइन</h1>
+    <p>घर बैठे अपनी आवश्यक सर्विस चुनें, विवरण भरें और हमारे द्वारा सुरक्षित रूप से अपना काम पूरा करवाएं।</p>
+    
+    <!-- FILTER TABS -->
+    <div class="filter-container">
+      <button class="filter-btn active" onclick="filterServices('all')">All Services</button>
+      <button class="filter-btn" onclick="filterServices('gov')">Government Docs</button>
+      <button class="filter-btn" onclick="filterServices('telecom')">Telecom & Recharge</button>
+      <button class="filter-btn" onclick="filterServices('academic')">Academic & Exams</button>
+    </div>
+  </section>
+
+  <!-- SERVICES SECTION -->
+  <section class="services-section" id="services">
+    <div class="grid">
+      
+      <!-- Card 1 -->
+      <div class="card" data-category="gov">
+        <div class="icon">🆔</div>
+        <h3>Aadhaar Card Services</h3>
+        <p>नया आधार कार्ड आवेदन, मोबाइल नंबर लिंक स्टेटस जांच, और डेमोग्राफिक विवरण सुधार की ऑनलाइन सेवा।</p>
+        <button class="fill-btn" onclick="selectService('Aadhaar Card Services')">Fill Form</button>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card" data-category="gov">
+        <div class="icon">💳</div>
+        <h3>PAN Card Application</h3>
+        <p>नया पैन कार्ड (Instant PAN) अप्लाई करें या पुराने पैन कार्ड में नाम, जन्मतिथि जैसी त्रुटियों को सही करवाएं।</p>
+        <button class="fill-btn" onclick="selectService('PAN Card Application')">Fill Form</button>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card" data-category="gov">
+        <div class="icon">🗳️</div>
+        <h3>Voter ID / Ration Card</h3>
+        <p>नया वोटर आईडी कार्ड, राशन कार्ड में नए सदस्य का नाम जोड़ना या यूनिट संशोधन की सभी सरकारी सुविधाएं।</p>
+        <button class="fill-btn" onclick="selectService('Voter ID & Ration Card')">Fill Form</button>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="card" data-category="telecom">
+        <div class="icon">📱</div>
+        <h3>Mobile Portability (MNP)</h3>
+        <p>बिना नंबर बदले अपने सिम को Airtel या Jio में पोर्ट करवाएं। साथ ही नए सिम एक्टिवेशन की सुविधा उपलब्ध है।</p>
+        <button class="fill-btn" onclick="selectService('Mobile Portability (MNP)')">Fill Form</button>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="card" data-category="telecom">
+        <div class="icon">⚡</div>
+        <h3>Mobile & DTH Recharge</h3>
+        <p>सभी टेलीकॉम ऑपरेटर्स के बेस्ट ऑफर्स के साथ तुरंत मोबाइल रिचार्ज और DTH टीवी रिचार्ज सेवाएं।</p>
+        <button class="fill-btn" onclick="selectService('Mobile & DTH Recharge')">Fill Form</button>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="card" data-category="academic">
+        <div class="icon">🎓</div>
+        <h3>Exam & Admission Forms</h3>
+        <p>NIELIT Course on Computer Concepts (CCC), यूनिवर्सिटी एडमिशन फॉर्म और सभी प्रतियोगी परीक्षाओं के फॉर्म भरवाएं।</p>
+        <button class="fill-btn" onclick="selectService('Exam & Admission Forms')">Fill Form</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- APPLICATION FORM SECTION -->
+  <section class="form-section" id="apply">
+    <div class="form-container">
+      <h2>Online Application Form</h2>
+      <p>नीचे दी गई डिटेल्स भरें, हम आपसे तुरंत संपर्क करेंगे।</p>
+      
+      <form id="serviceForm" onsubmit="handleFormSubmit(event)">
+        <div class="form-group">
+          <label>Your Full Name (आपका पूरा नाम)</label>
+          <input type="text" id="custName" placeholder="e.g. Rahul Kumar" required />
+        </div>
+        
+        <div class="form-group">
+          <label>Mobile Number (व्हाट्सऐप नंबर)</label>
+          <input type="tel" id="custPhone" placeholder="e.g. 98765XXXXX" required />
+        </div>
+        
+        <div class="form-group">
+          <label>Select Service Required (ज़रूरी सर्विस चुनें)</label>
+          <select id="serviceSelect" required>
+            <option value="">-- चुनें कौन सी सर्विस चाहिए --</option>
+            <option value="Aadhaar Card Services">Aadhaar Card Services</option>
+            <option value="PAN Card Application">PAN Card Application</option>
+            <option value="Voter ID & Ration Card">Voter ID & Ration Card</option>
+            <option value="Mobile Portability (MNP)">Mobile Portability (MNP)</option>
+            <option value="Mobile & DTH Recharge">Mobile & DTH Recharge</option>
+            <option value="Exam & Admission Forms">Exam & Admission Forms</option>
+            <option value="Other Digital Service">Other (अन्य डिजिटल सेवा)</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label>Message / Work Details (काम की अतिरिक्त जानकारी)</label>
+          <textarea id="custMsg" rows="4" placeholder="यहाँ लिखें कि फॉर्म में क्या सुधार करना है या कौन सा नया फॉर्म भरना है..."></textarea>
+        </div>
+        
+        <button type="submit" class="submit-btn">Submit Request ✦</button>
+      </form>
+
+      <div class="wa-notice">
+        आसान तरीका: आप अपने डाक्यूमेंट्स सीधे हमारे <a class="wa-link" href="https://wa.me/91YOUR_WHATSAPP_NUMBER" target="_blank">WhatsApp</a> पर भी भेज सकते हैं।
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 <span>Chaudhary Jan Seva Kendra</span>. All rights reserved.</p>
+    <p style="font-size: 0.75rem; margin-top: 0.5rem; color: #475569;">Digital Partner for Your Everyday Needs</p>
+  </footer>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // 1. Filter Services Function
+    function filterServices(category) {
+      // Toggle Active Class on Buttons
+      const buttons = document.querySelectorAll('.filter-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+
+      // Show/Hide Cards
+      const cards = document.querySelectorAll('.card');
+      cards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // 2. Select Service and Auto-Scroll & Fill Function
+    function selectService(serviceName) {
+      const selectBox = document.getElementById('serviceSelect');
+      selectBox.value = serviceName;
+      
+      // Smooth Scroll to Form
+      document.getElementById('apply').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // 3. Form Submit Handler (Alert Mockup)
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('custName').value;
+      const service = document.getElementById('serviceSelect').value;
+      
+      alert(`धन्यवाद ${name}! आपकी ${service} के लिए रिक्वेस्ट दर्ज कर ली गई है। हम जल्द ही आपसे संपर्क करेंगे।`);
+      document.getElementById('serviceForm').reset();
+    }
+  </script>
+</body>
+</html>
